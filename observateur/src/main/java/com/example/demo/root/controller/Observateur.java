@@ -3,11 +3,10 @@ package com.example.demo.root.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class Observateur {
@@ -49,6 +48,26 @@ public class Observateur {
 
 
         scanService.createScan(scan);
+
+    }
+    @RequestMapping(value = "/analyste/{joueur}/{type}", method = RequestMethod.GET)
+    @ResponseBody
+    HashMap<String, Integer>  findanalyste( @PathVariable String joueur, @PathVariable String type){
+
+        if(type.equals("progression")){
+            System.out.println("progressivite");
+
+            return reponseService.getJoueur_reponse(joueur);
+        }
+
+        if(type.equals("curiosite")){
+            System.out.println("curiosite");
+            return scanService.getJoueur_scan(joueur);
+
+        }
+        else {
+            return null;
+        }
 
     }
 

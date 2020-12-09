@@ -3,14 +3,12 @@ package com.example.demo.root.controller;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ReponseServiceImpl implements ReponseService{
     private static Reponse rep =new Reponse();
+    private static Map<String, Integer> joueur_reponse = new HashMap<String, Integer>();
 
     private String reponse_joueur;
     private String bonne_reponse;
@@ -26,11 +24,30 @@ public class ReponseServiceImpl implements ReponseService{
         bonne_reponse= reponse.getReponse();
 
 
+
         sendGlobalApi();
     }
 
+    @Override
+    public HashMap<String, Integer> getJoueur_reponse(String joueur) {
+        HashMap<String, Integer> map = new HashMap<>();
+        if ( joueur_reponse.containsKey(joueur)){
+            map.put(joueur,joueur_reponse.get(joueur) );
+            joueur_reponse.remove(joueur);
+            joueur_reponse.put(joueur,0);
+            return map;
+        }
+        else{
+            joueur_reponse.put(joueur,0);
+            map.put(joueur,joueur_reponse.get(joueur));
+            return map;
+        }
 
+    }
 
+    public void setJoueur_reponse(Map<String, Integer> joueur_reponse) {
+        this.joueur_reponse = joueur_reponse;
+    }
 
     @Override
     public ArrayList<String> getQuestions() {
@@ -45,7 +62,19 @@ public class ReponseServiceImpl implements ReponseService{
         RestTemplate template = new RestTemplate();
         String url = "http://localhost:8080/api";
         if(bonne_reponse.equals(reponse_joueur)){
-            nbre_reponses++;
+            if(joueur_reponse.containsKey(rep.getJoueur())){
+                nbre_reponses = joueur_reponse.get(rep.getJoueur());
+                nbre_reponses++;
+                joueur_reponse.remove(rep.getJoueur());
+                joueur_reponse.put(rep.getJoueur(),nbre_reponses);
+
+            }
+            else{
+                joueur_reponse.put(rep.getJoueur(),1);
+
+            }
+
+
             rep.setReponse(bonne_reponse);
             System.out.println("coucou");
             questions.add("bonne reponse" +bonne_reponse );
