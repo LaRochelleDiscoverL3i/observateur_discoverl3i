@@ -1,6 +1,16 @@
 # observateur
 
+
 Dans cette partie nous expliquerons la communication entre globalAPIServer et observateur. 
+
+
+Les routes de l'api observateur : 
+  - localhost:8084/scan              / * HTTP  POST .   pour envoyer un scan à observateur */
+  - localhost:8084/reponse   / *   HTTP  POST    .pour envoyer une reponse à observateur */
+  - localhost:8084/chercheur/{joueur}  /*  HTTP GET  */
+  - localhost:8084/analyste/{joueur}/{type}  /*  HTTP GET  */ 
+  - 
+
 
 1. Partie Scan : 
 
@@ -64,18 +74,18 @@ globalAPIServer recoie un scan du joueur  de la partie phoneGap , qui est de typ
       - "joueur": nbre_scan
     }
 
-    ex: 
+    ex:  http://localhost:8080/analyste/curiosite/toto
      {
       - "toto": 4
     }
 
-Pour nbre reponse, il fait un get sur l'url : http://localhost:8080/analyste/progression{joueur}
+Pour nbre reponse, il fait un get sur l'url : http://localhost:8080/analyste/progression/{joueur}
    il aura le json suivant :
      {
       - "joueur": nbre_reponse
 
       }
-      ex:
+      ex:  http://localhost:8080/analyste/progression/toto
       {
         - "toto": 3
       }

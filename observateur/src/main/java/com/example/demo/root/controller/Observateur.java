@@ -29,7 +29,7 @@ public class Observateur {
     }
 
 
-    @RequestMapping(value = "/reponses", method = RequestMethod.POST)
+    @RequestMapping(value = "/reponse", method = RequestMethod.POST)
     void addReponse(@RequestBody Reponse reponse){
 
 
