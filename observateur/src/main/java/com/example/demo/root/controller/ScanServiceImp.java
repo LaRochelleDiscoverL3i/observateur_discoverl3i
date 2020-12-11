@@ -16,9 +16,10 @@ public class ScanServiceImp implements ScanService{
 
 
 
-    private static String chercheur ="";
+
     private static int nbre_scan=0;
     private static  Map<String, Integer> joueur_scan = new HashMap<String, Integer>();
+    private static Map<String, String> joueur_dernierscan = new HashMap<String, String>();
 
     @Override
     public HashMap<String, Integer> getJoueur_scan(String joueur) {
@@ -44,17 +45,23 @@ public class ScanServiceImp implements ScanService{
     @Override
     public void createScan(Scan scan) {
 
-        chercheur =scan.getChercheur();
+
+
         if(joueur_scan.containsKey(scan.getJoueur())){
             nbre_scan = joueur_scan.get(scan.getJoueur());
             nbre_scan++;
             joueur_scan.remove(scan.getJoueur());
             joueur_scan.put(scan.getJoueur(),nbre_scan);
             System.out.println("ca marche");
+            joueur_dernierscan.remove(scan.getJoueur());
+            joueur_dernierscan.put(scan.getJoueur(),scan.getChercheur());
+
 
         }
         else{
+
             joueur_scan.put(scan.getJoueur(),1);
+            joueur_dernierscan.put(scan.getJoueur(),scan.getChercheur());
             System.out.println("ca marche pas ");
 
         }
@@ -63,9 +70,14 @@ public class ScanServiceImp implements ScanService{
     }
 
     @Override
-    public String getChercheur() {
+    public Map<String, String> getChercheur(String joueur) {
+        HashMap<String, String> map = new HashMap<>();
 
-        return chercheur;
+        if(joueur_dernierscan.containsKey(joueur)){
+            map.put(joueur, joueur_dernierscan.get(joueur));
+        }
+
+        return map;
     }
 
 

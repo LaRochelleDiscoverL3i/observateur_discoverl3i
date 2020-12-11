@@ -6,6 +6,6 @@ import java.util.Map;
 
 public interface ScanService {
     public abstract void createScan(Scan scan);
-    public abstract String getChercheur();
+    public abstract Map<String, String> getChercheur(String joueur);
     public abstract HashMap<String, Integer> getJoueur_scan(String joueur);
 }

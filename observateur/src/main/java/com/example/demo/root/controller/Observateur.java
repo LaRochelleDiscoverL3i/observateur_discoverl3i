@@ -73,10 +73,10 @@ public class Observateur {
 
 
 
-    @RequestMapping(value = "/chercheur", method = RequestMethod.GET)
+    @RequestMapping(value = "/chercheur/{joueur}", method = RequestMethod.GET)
     @ResponseBody
-    String getChercheur() {
-        return scanService.getChercheur();
+    Map<String, String> getChercheur(@PathVariable String joueur) {
+        return scanService.getChercheur(joueur);
     }
 
 
