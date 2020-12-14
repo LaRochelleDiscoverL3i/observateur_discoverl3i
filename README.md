@@ -8,7 +8,7 @@ Les routes de l'api observateur :
   - localhost:8084/scan              / * HTTP  POST .   pour envoyer un scan à observateur */
   - localhost:8084/reponse   / *   HTTP  POST    .pour envoyer une reponse à observateur */
   - localhost:8084/chercheur/{joueur}  /*  HTTP GET  */
-  - localhost:8084/analyste/{joueur}/{type}  /*  HTTP GET  */ 
+  - localhost:8084/analyste/{type}/{joueur} /*  HTTP GET  */ 
   - 
 
 
