@@ -10,6 +10,7 @@ public class ReponseServiceImpl implements ReponseService{
     private static Reponse rep =new Reponse();
     private static Map<String, Integer> joueur_reponse = new HashMap<String, Integer>();
 
+
     private String reponse_joueur;
     private String bonne_reponse;
     private int nbre_reponses=0;
@@ -18,6 +19,22 @@ public class ReponseServiceImpl implements ReponseService{
 
     @Override
     public void createReponse(Reponse reponse) {
+
+        if(joueur_reponse.containsKey(reponse.getJoueur())){
+            nbre_reponses = joueur_reponse.get(reponse.getJoueur());
+            nbre_reponses++;
+            joueur_reponse.remove(reponse.getJoueur());
+            joueur_reponse.put(reponse.getJoueur(),nbre_reponses);
+            System.out.println("ca marche");
+
+
+        }
+        else{
+
+            joueur_reponse.put(reponse.getJoueur(),1);
+            System.out.println("ca marche pas ");
+
+        }
         rep.setQuestion(reponse.getQuestion());
         reponse_joueur= reponse.getReponse_joueur();
         rep.setJoueur(reponse.getJoueur());
@@ -31,7 +48,7 @@ public class ReponseServiceImpl implements ReponseService{
     @Override
     public HashMap<String, Integer> getJoueur_reponse(String joueur) {
         HashMap<String, Integer> map = new HashMap<>();
-        if ( joueur_reponse.containsKey(joueur)){
+        if(joueur_reponse.containsKey(joueur)){
             map.put(joueur,joueur_reponse.get(joueur) );
             joueur_reponse.remove(joueur);
             joueur_reponse.put(joueur,0);
@@ -60,7 +77,7 @@ public class ReponseServiceImpl implements ReponseService{
 
 
         RestTemplate template = new RestTemplate();
-        String url = "http://localhost:8080/api";
+
         if(bonne_reponse.equals(reponse_joueur)){
             if(joueur_reponse.containsKey(rep.getJoueur())){
                 nbre_reponses = joueur_reponse.get(rep.getJoueur());
@@ -78,11 +95,12 @@ public class ReponseServiceImpl implements ReponseService{
             rep.setReponse(bonne_reponse);
             System.out.println("coucou");
             questions.add("bonne reponse" +bonne_reponse );
-
+            String url = "http://localhost:8084/api";
             template.postForLocation(url, rep);
         }
         else{
-            rep.setReponse("");
+            rep.setReponse(reponse_joueur);
+            String url = "http://localhost:8084/api";
             template.postForLocation(url, rep);
             questions.add("mauvaise reponse" );
 

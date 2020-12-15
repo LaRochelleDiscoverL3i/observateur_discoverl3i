@@ -50,9 +50,9 @@ public class Observateur {
         scanService.createScan(scan);
 
     }
-    @RequestMapping(value = "/analyste/{joueur}/{type}", method = RequestMethod.GET)
+    @RequestMapping(value = "/analyste/{type}/{joueur}", method = RequestMethod.GET)
     @ResponseBody
-    HashMap<String, Integer>  findanalyste( @PathVariable String joueur, @PathVariable String type){
+    HashMap<String, Integer>  findanalyste(  @PathVariable String type ,@PathVariable String joueur){
 
         if(type.equals("progression")){
             System.out.println("progressivite");
