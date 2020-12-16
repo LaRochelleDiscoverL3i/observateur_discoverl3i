@@ -17,6 +17,10 @@ public class ReponseServiceImpl implements ReponseService{
 
     private static ArrayList<String> questions = new ArrayList<String>();
 
+    /*
+     Reception d'un post d'une reponse à partir de l'api
+     */
+
     @Override
     public void createReponse(Reponse reponse) {
 
@@ -41,7 +45,7 @@ public class ReponseServiceImpl implements ReponseService{
         bonne_reponse= reponse.getReponse();
 
 
-
+        // Envoie reponse to GLOBALAPI pour qu'il fait l'insertion necessaire dans la BD
         sendGlobalApi();
     }
 
@@ -94,13 +98,20 @@ public class ReponseServiceImpl implements ReponseService{
 
             rep.setReponse(bonne_reponse);
             System.out.println("coucou");
+
+
             questions.add("bonne reponse" +bonne_reponse );
-            String url = "http://localhost:8084/api";
-            template.postForLocation(url, rep);
+            // envoyer la reponse du joueur pour inserer une nouvelle reponse dans la bd
+            String url1 = "http://localhost:8081/reponse";
+            template.postForLocation(url1, rep);
+            String url2 = "http://localhost:8081/scansjoueur";
+            // envoyer la reponse du joueur pour inserer un nouveau dans la bd
+            template.postForLocation(url2, rep);
         }
         else{
             rep.setReponse(reponse_joueur);
-            String url = "http://localhost:8084/api";
+            // envoyer la reponse du joueur pour inserer dans les questions d'un joueur
+            String url = "http://localhost:8081/questionjoueur";
             template.postForLocation(url, rep);
             questions.add("mauvaise reponse" );
 
