@@ -21,6 +21,9 @@ public class Observateur {
     ScanService scanService;
 
 
+    /*
+    *
+    *  */
     @RequestMapping(value = "/question", method = RequestMethod.GET)
     @ResponseBody
     List<String> getQuestion() {
@@ -28,20 +31,34 @@ public class Observateur {
         return reponseService.getQuestions();
     }
 
-
+    /*
+     * Route : localhost:8084/reponse
+     * Type: POST
+     * permet de GlobalApiServer d'envoyer les reponses a l'observateur pour qu'il fait ses observations sur les reponses des joueurs
+     *
+     * */
     @RequestMapping(value = "/reponse", method = RequestMethod.POST)
     void addReponse(@RequestBody Reponse reponse){
 
 
         reponseService.createReponse(reponse);
     }
-
+    /*
+    * pour tester les poste sur GLobalApiServer
+     */
     @RequestMapping(value = "/api", method = RequestMethod.POST)
     void apiReponse(@RequestBody Reponse reponse){
 
 
        System.out.println("recu");
     }
+
+    /*
+     * Route : localhost:8084/scan
+     * Type: POST
+     * permet de GlobalApiServer d'envoyer les scan a l'observateur pour qu'il fait ses observations sur les scans des joueurs
+     *
+     */
 
     @RequestMapping(value = "/scan", method = RequestMethod.POST)
     void addScan(@RequestBody Scan scan){
@@ -50,6 +67,17 @@ public class Observateur {
         scanService.createScan(scan);
 
     }
+
+
+    /*
+     * Route : localhost:8084/analyste/{type}/{joueur}
+     * Type: GET
+     * permet de GlobalApiServer de recuperer la curiosite ou la progression d'un joueur
+     *
+     *return  {
+     *          -"joueur": "nbre"
+     *           }
+     */
     @RequestMapping(value = "/analyste/{type}/{joueur}", method = RequestMethod.GET)
     @ResponseBody
     HashMap<String, Integer>  findanalyste(  @PathVariable String type ,@PathVariable String joueur){
@@ -72,6 +100,15 @@ public class Observateur {
     }
 
 
+    /*
+      *Route : localhost:8084/chercheur/joueur
+      *Type: GET
+      * return :
+      * {
+      *   - "joueur": "dernierchercheurScane"
+      * }
+
+     */
 
     @RequestMapping(value = "/chercheur/{joueur}", method = RequestMethod.GET)
     @ResponseBody
