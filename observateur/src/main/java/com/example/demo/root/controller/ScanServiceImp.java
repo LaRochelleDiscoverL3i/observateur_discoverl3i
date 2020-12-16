@@ -42,11 +42,15 @@ public class ScanServiceImp implements ScanService{
         this.joueur_scan = joueur_scan;
     }
 
+
+    /* reception scan joueur afin d'incrementer les scan d'un joueur
+
+     */
     @Override
     public void createScan(Scan scan) {
 
 
-
+        // verfier si le joueur exite deja ou non
         if(joueur_scan.containsKey(scan.getJoueur())){
             nbre_scan = joueur_scan.get(scan.getJoueur());
             nbre_scan++;
@@ -69,6 +73,7 @@ public class ScanServiceImp implements ScanService{
 
     }
 
+    // recuperer le dernier chercheur scanne par un joueur
     @Override
     public Map<String, String> getChercheur(String joueur) {
         HashMap<String, String> map = new HashMap<>();
